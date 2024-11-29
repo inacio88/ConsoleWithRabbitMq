@@ -4,7 +4,7 @@ using System.Text;
 
 ConnectionFactory factory = new();
 factory.Uri = new Uri("amqp://guest:guest@localhost:5672");
-factory.ClientProvidedName = "Rabbit receiver1 app";
+factory.ClientProvidedName = "Rabbit receiver2 app";
 
 IConnection connection = factory.CreateConnection();
 
@@ -21,7 +21,7 @@ channnel.QueueBind(queueName, exchangeName, routingKey, null);
 channnel.BasicQos(prefetchSize: 0, prefetchCount: 1,global: false);
 var consumer = new EventingBasicConsumer(channnel);
 consumer.Received += (sender, args) =>{
-    //Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+    //Task.Delay(TimeSpan.FromSeconds(2)).Wait();
     var body = args.Body.ToArray();
     string message = Encoding.UTF8.GetString(body);
     Console.WriteLine($"Message received: {message}");

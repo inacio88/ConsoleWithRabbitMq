@@ -17,13 +17,13 @@ channnel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
 channnel.QueueDeclare(queueName, false, false, false, null);
 channnel.QueueBind(queueName, exchangeName, routingKey, null);
 
-for (int i = 0; i < 30; i++)
+for (int i = 0; i < 10100; i++)
 {
     var msg = $"Sending message {i}";
     System.Console.WriteLine(msg);
     byte[] messageBodyBytes = Encoding.UTF8.GetBytes(msg);
     channnel.BasicPublish(exchangeName, routingKey, null, messageBodyBytes);
-    Thread.Sleep(1000);
+    //Thread.Sleep(1000);
 }
 
 
