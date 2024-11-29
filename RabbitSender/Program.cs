@@ -17,8 +17,15 @@ channnel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
 channnel.QueueDeclare(queueName, false, false, false, null);
 channnel.QueueBind(queueName, exchangeName, routingKey, null);
 
-byte[] messageBodyBytes = Encoding.UTF8.GetBytes("Hello Mundo");
-channnel.BasicPublish(exchangeName, routingKey, null, messageBodyBytes);
+for (int i = 0; i < 30; i++)
+{
+    var msg = $"Sending message {i}";
+    System.Console.WriteLine(msg);
+    byte[] messageBodyBytes = Encoding.UTF8.GetBytes(msg);
+    channnel.BasicPublish(exchangeName, routingKey, null, messageBodyBytes);
+    Thread.Sleep(1000);
+}
+
 
 channnel.Close();
 
